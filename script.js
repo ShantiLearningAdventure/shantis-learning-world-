@@ -1,13 +1,13 @@
 const categories = [
-  { id: 'abc', icon: '🅰️', title: 'ABC Learning', blurb: 'Letters and sounds!' },
-  { id: 'numbers', icon: '🔢', title: '123 Learning', blurb: 'Count and learn!' },
-  { id: 'colors', icon: '🎨', title: 'Colors', blurb: 'Bright and beautiful!' },
-  { id: 'shapes', icon: '🔷', title: 'Shapes', blurb: 'Round, square, and more!' },
-  { id: 'matching', icon: '🧩', title: 'Matching Games', blurb: 'Find the pair!' },
-  { id: 'tracing', icon: '✏️', title: 'Tracing', blurb: 'Follow the line!' },
-  { id: 'mini', icon: '🎮', title: 'Mini Games', blurb: 'Play and smile!' },
-  { id: 'stories', icon: '📚', title: 'Story Time', blurb: 'Read and imagine!' },
-  { id: 'progress', icon: '📈', title: 'Progress', blurb: 'See how we grow!' }
+  { id: 'abc', icon: '🔤', title: 'ABC Adventure', blurb: 'Letters and sounds' },
+  { id: 'numbers', icon: '🔢', title: 'Number Fun', blurb: 'Count and explore' },
+  { id: 'colors', icon: '🎨', title: 'Colors', blurb: 'Bright and fun' },
+  { id: 'shapes', icon: '🔷', title: 'Shapes', blurb: 'Round and square' },
+  { id: 'songs', icon: '🎵', title: 'Songs', blurb: 'Sing and sway' },
+  { id: 'games', icon: '🧩', title: 'Games', blurb: 'Play and learn' },
+  { id: 'matching', icon: '✨', title: 'Matching', blurb: 'Find the pair' },
+  { id: 'tracing', icon: '✏️', title: 'Tracing', blurb: 'Follow the line' },
+  { id: 'progress', icon: '📈', title: 'Progress', blurb: 'See growth' }
 ];
 
 const letterData = {
@@ -16,7 +16,7 @@ const letterData = {
   C: { word: 'Cat', sound: 'Ccc', emoji: '🐱', fact: 'C is for Cat! Meow, meow!' },
   D: { word: 'Dog', sound: 'Ddd', emoji: '🐶', fact: 'D is for Dog! Wag, wag, wag!' },
   E: { word: 'Elephant', sound: 'Eee', emoji: '🐘', fact: 'E is for Elephant! Big and gentle!' },
-  F: { word: 'Fish', sound: 'Fff', emoji: '🐟', fact: 'F is for Fish! Swim, swim, swim!' },
+  F: { word: 'Fish', sound: 'Fff', emoji: '🐟', fact: 'F is for Fish! Splash, splash!' },
   G: { word: 'Giraffe', sound: 'Ggg', emoji: '🦒', fact: 'G is for Giraffe! Tall and sweet!' },
   H: { word: 'House', sound: 'Hhh', emoji: '🏠', fact: 'H is for House! Home, sweet home!' },
   I: { word: 'Ice Cream', sound: 'Iii', emoji: '🍦', fact: 'I is for Ice Cream! Yum-yum!' },
@@ -39,14 +39,11 @@ const letterData = {
   Z: { word: 'Zebra', sound: 'Zzz', emoji: '🦓', fact: 'Z is for Zebra! Stripes and zoom!' }
 };
 
-const numberData = Array.from({ length: 20 }, (_, i) => {
-  const value = i + 1;
-  return {
-    value,
-    emoji: ['🌟', '🧸', '🍓', '🍋', '🌼', '🍉', '🐝', '🦋', '🍏', '🍊'][value % 10] || '⭐',
-    fact: `Count ${value}!` 
-  };
-});
+const numberData = Array.from({ length: 20 }, (_, i) => ({
+  value: i + 1,
+  emoji: ['🌟', '🧸', '🍓', '🍋', '🌼', '🍉', '🐝', '🦋', '🍏', '🍊'][i % 10] || '⭐',
+  fact: `Count ${i + 1}!`
+}));
 
 const colorData = [
   { name: 'Red', hex: '#ff7c7c', icon: '🍎', fact: 'Red is like a juicy apple!' },
@@ -73,14 +70,15 @@ const storyData = [
 ];
 
 const progressState = {
-  abc: 3,
-  numbers: 4,
-  colors: 2,
-  shapes: 5,
-  matching: 1,
-  tracing: 2,
-  mini: 3,
-  stories: 2
+  abc: 4,
+  numbers: 5,
+  colors: 3,
+  shapes: 4,
+  matching: 3,
+  tracing: 4,
+  mini: 4,
+  stories: 3,
+  songs: 5
 };
 
 const homeGrid = document.getElementById('categoryGrid');
@@ -88,9 +86,10 @@ const activityTitle = document.getElementById('activityTitle');
 const activityContent = document.getElementById('activityContent');
 const homeScreen = document.getElementById('homeScreen');
 const activityScreen = document.getElementById('activityScreen');
+const startBtn = document.getElementById('startLearningBtn');
 
 const renderHome = () => {
-  homeGrid.innerHTML = categories.map(category => `
+  homeGrid.innerHTML = categories.map((category) => `
     <button class="category-card" data-category="${category.id}" aria-label="Open ${category.title}">
       <span class="category-icon">${category.icon}</span>
       <h3>${category.title}</h3>
@@ -105,7 +104,7 @@ const showScreen = (screen) => {
 };
 
 const showCategory = (id) => {
-  const label = categories.find(cat => cat.id === id)?.title || 'Learning';
+  const label = categories.find((cat) => cat.id === id)?.title || 'Learning';
   activityTitle.textContent = label;
   showScreen('activity');
 
@@ -113,9 +112,10 @@ const showCategory = (id) => {
   else if (id === 'numbers') renderNumbers();
   else if (id === 'colors') renderColors();
   else if (id === 'shapes') renderShapes();
+  else if (id === 'songs') renderSongs();
+  else if (id === 'games') renderMiniGame();
   else if (id === 'matching') renderMatchingGame();
   else if (id === 'tracing') renderTracing();
-  else if (id === 'mini') renderMiniGame();
   else if (id === 'stories') renderStories();
   else if (id === 'progress') renderProgress();
 };
@@ -131,23 +131,17 @@ const renderAbc = () => {
         </button>
       `).join('')}
     </div>
-    <div class="detail-panel" id="abcDetail">
-      <div class="detail-art">${letterData.A.emoji}</div>
-      <div class="detail-copy">
-        <h3>${letterData.A.word}</h3>
-        <p>${letterData.A.fact}</p>
-        <span class="sound-badge">Sound: ${letterData.A.sound}</span>
-      </div>
-    </div>
+    <div class="detail-panel" id="abcDetail"></div>
   `;
 
   const detailPanel = document.getElementById('abcDetail');
+  const initial = letterData.A;
   detailPanel.innerHTML = `
-    <div class="detail-art">${letterData.A.emoji}</div>
+    <div class="detail-art">${initial.emoji}</div>
     <div class="detail-copy">
-      <h3>A for ${letterData.A.word}</h3>
-      <p>${letterData.A.fact}</p>
-      <span class="sound-badge">Sound: ${letterData.A.sound}</span>
+      <h3>A for ${initial.word}</h3>
+      <p>${initial.fact}</p>
+      <span class="sound-badge">Sound: ${initial.sound}</span>
     </div>
   `;
 
@@ -170,24 +164,27 @@ const renderAbc = () => {
 const renderNumbers = () => {
   activityContent.innerHTML = `
     <div class="big-grid">
-      ${numberData.map(item => `
+      ${numberData.map((item) => `
         <button class="mini-card" data-number="${item.value}">
           <span class="letter-big">${item.value}</span>
           <span class="label">${item.emoji}</span>
         </button>
       `).join('')}
     </div>
-    <div class="detail-panel" id="numberDetail">
-      <div class="detail-art">1️⃣</div>
-      <div class="detail-copy">
-        <h3>One</h3>
-        <p>Count 1 object and say, “One!”</p>
-        <span class="sound-badge">Counting fun!</span>
-      </div>
-    </div>
+    <div class="detail-panel" id="numberDetail"></div>
   `;
 
   const detailPanel = document.getElementById('numberDetail');
+  const initial = numberData[0];
+  detailPanel.innerHTML = `
+    <div class="detail-art">${initial.emoji}</div>
+    <div class="detail-copy">
+      <h3>${initial.value}</h3>
+      <p>${initial.fact}</p>
+      <span class="sound-badge">Count with me!</span>
+    </div>
+  `;
+
   activityContent.addEventListener('click', (event) => {
     const target = event.target.closest('[data-number]');
     if (!target) return;
@@ -196,7 +193,7 @@ const renderNumbers = () => {
     detailPanel.innerHTML = `
       <div class="detail-art">${item.emoji}</div>
       <div class="detail-copy">
-        <h3>${value}</h3>
+        <h3>${item.value}</h3>
         <p>${item.fact}</p>
         <span class="sound-badge">Count with me!</span>
       </div>
@@ -207,7 +204,7 @@ const renderNumbers = () => {
 const renderColors = () => {
   activityContent.innerHTML = `
     <div class="big-grid">
-      ${colorData.map(color => `
+      ${colorData.map((color) => `
         <button class="mini-card" data-color="${color.name}">
           <div class="color-swatch" style="background:${color.hex};">
             <span>${color.name}</span>
@@ -215,22 +212,25 @@ const renderColors = () => {
         </button>
       `).join('')}
     </div>
-    <div class="detail-panel" id="colorDetail">
-      <div class="detail-art">🍎</div>
-      <div class="detail-copy">
-        <h3>Red</h3>
-        <p>Red is like a juicy apple!</p>
-        <span class="sound-badge">Look for red items!</span>
-      </div>
-    </div>
+    <div class="detail-panel" id="colorDetail"></div>
   `;
 
   const detailPanel = document.getElementById('colorDetail');
+  const initial = colorData[0];
+  detailPanel.innerHTML = `
+    <div class="detail-art" style="background:${initial.hex};">${initial.icon}</div>
+    <div class="detail-copy">
+      <h3>${initial.name}</h3>
+      <p>${initial.fact}</p>
+      <span class="sound-badge">Look for ${initial.name.toLowerCase()}!</span>
+    </div>
+  `;
+
   activityContent.addEventListener('click', (event) => {
     const target = event.target.closest('[data-color]');
     if (!target) return;
     const name = target.dataset.color;
-    const item = colorData.find(c => c.name === name);
+    const item = colorData.find((c) => c.name === name);
     if (!item) return;
     detailPanel.innerHTML = `
       <div class="detail-art" style="background:${item.hex};">${item.icon}</div>
@@ -246,35 +246,39 @@ const renderColors = () => {
 const renderShapes = () => {
   activityContent.innerHTML = `
     <div class="big-grid">
-      ${shapeData.map(shape => `
+      ${shapeData.map((shape) => `
         <button class="shape-card mini-card" data-shape="${shape.name}">
           <div class="shape-box ${shape.kind}"></div>
           <strong>${shape.name}</strong>
         </button>
       `).join('')}
     </div>
-    <div class="detail-panel" id="shapeDetail">
-      <div class="detail-art">🔵</div>
-      <div class="detail-copy">
-        <h3>Circle</h3>
-        <p>A circle is round like a ball.</p>
-        <span class="sound-badge">Round and round!</span>
-      </div>
-    </div>
+    <div class="detail-panel" id="shapeDetail"></div>
   `;
 
   const detailPanel = document.getElementById('shapeDetail');
+  const initial = shapeData[0];
+  detailPanel.innerHTML = `
+    <div class="detail-art">${initial.icon}</div>
+    <div class="detail-copy">
+      <h3>${initial.name}</h3>
+      <p>A circle is round like a ball. Can you find one?</p>
+      <span class="sound-badge">Round and round!</span>
+    </div>
+  `;
+
   activityContent.addEventListener('click', (event) => {
     const target = event.target.closest('[data-shape]');
     if (!target) return;
     const name = target.dataset.shape;
-    const item = shapeData.find(s => s.name === name);
+    const item = shapeData.find((shape) => shape.name === name);
     if (!item) return;
+    const info = item.name === 'Circle' ? 'A circle is round like a ball.' : item.name === 'Square' ? 'A square has four equal sides.' : item.name === 'Triangle' ? 'A triangle has three sides.' : item.name === 'Rectangle' ? 'A rectangle has four sides and four corners.' : item.name === 'Oval' ? 'An oval is like a stretched circle.' : 'A star has points and shines bright!';
     detailPanel.innerHTML = `
       <div class="detail-art">${item.icon}</div>
       <div class="detail-copy">
         <h3>${item.name}</h3>
-        <p>${item.name === 'Circle' ? 'A circle is round like a ball.' : item.name === 'Square' ? 'A square has four equal sides.' : item.name === 'Triangle' ? 'A triangle has three sides.' : item.name === 'Rectangle' ? 'A rectangle has two long sides and two short sides.' : item.name === 'Oval' ? 'An oval is like a stretched circle.' : 'A star has points and shines bright!'}</p>
+        <p>${info}</p>
         <span class="sound-badge">Find one in your room!</span>
       </div>
     `;
@@ -295,9 +299,7 @@ const renderMatchingGame = () => {
 
   let selected = [];
   let matched = new Set();
-
-  const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
-  const boardCards = shuffle(cards);
+  const boardCards = [...cards].sort(() => Math.random() - 0.5);
 
   const renderBoard = () => {
     activityContent.innerHTML = `
@@ -376,7 +378,7 @@ const renderTracing = () => {
 
   const drawBoard = () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = '#d9ebff';
+    ctx.strokeStyle = '#dfeeff';
     ctx.lineWidth = 10;
     ctx.lineCap = 'round';
     ctx.beginPath();
@@ -441,6 +443,19 @@ const renderTracing = () => {
   });
 };
 
+const renderSongs = () => {
+  activityContent.innerHTML = `
+    <div class="song-card">
+      <div class="song-lines">
+        <div>Twinkle, twinkle, little star,</div>
+        <div>Shanti is learning from near and far.</div>
+        <div>ABC and 123,</div>
+        <div>We sing and play, hooray!</div>
+      </div>
+    </div>
+  `;
+};
+
 const renderMiniGame = () => {
   const questions = [
     { prompt: 'Which number comes after 4?', options: ['5', '7', '3'], answer: '5' },
@@ -458,11 +473,11 @@ const renderMiniGame = () => {
         <div class="question-card">
           <h3>${q.prompt}</h3>
           <div class="option-grid">
-            ${q.options.map(option => `
+            ${q.options.map((option) => `
               <button class="option-card" data-option="${option}">${option}</button>
             `).join('')}
           </div>
-          <div class="feedback">${answered ? 'Keep learning!' : 'Choose the answer!'}</div>
+          <div class="feedback">${answered ? 'Keep learning!' : 'Pick the right answer!'}</div>
         </div>
       </div>
     `;
@@ -515,7 +530,7 @@ const renderMiniGame = () => {
 const renderStories = () => {
   activityContent.innerHTML = `
     <div class="story-grid">
-      ${storyData.map(story => `
+      ${storyData.map((story) => `
         <article class="story-card">
           <div class="story-icon">${story.icon}</div>
           <h3>${story.title}</h3>
@@ -528,14 +543,14 @@ const renderStories = () => {
 
 const renderProgress = () => {
   const items = [
-    ['ABC Learning', progressState.abc],
-    ['123 Learning', progressState.numbers],
+    ['ABC Adventure', progressState.abc],
+    ['Number Fun', progressState.numbers],
     ['Colors', progressState.colors],
     ['Shapes', progressState.shapes],
     ['Matching', progressState.matching],
     ['Tracing', progressState.tracing],
-    ['Mini Games', progressState.mini],
-    ['Story Time', progressState.stories]
+    ['Games', progressState.mini],
+    ['Songs', progressState.songs]
   ];
 
   const total = items.reduce((sum, [, value]) => sum + value, 0);
@@ -550,20 +565,19 @@ const renderProgress = () => {
         </div>
       `).join('')}
     </div>
-    <div class="progress-summary">
-      Shanti’s learning sparkle score: ${average}%! Keep learning and growing! 🌟
-    </div>
+    <div class="progress-summary">Shanti’s learning sparkle score: ${average}%! Keep learning and growing! 🌟</div>
   `;
 };
+
+startBtn.addEventListener('click', () => showCategory('abc'));
 
 document.getElementById('homeBtn').addEventListener('click', () => showScreen('home'));
 document.getElementById('backBtn').addEventListener('click', () => showScreen('home'));
 
 homeGrid.addEventListener('click', (event) => {
-  const categoryButton = event.target.closest('.category-card');
-  if (!categoryButton) return;
-  const categoryId = categoryButton.dataset.category;
-  showCategory(categoryId);
+  const card = event.target.closest('.category-card');
+  if (!card) return;
+  showCategory(card.dataset.category);
 });
 
 renderHome();

@@ -4,54 +4,92 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shanti's Learning World</title>
+    <meta name="description" content="A colorful educational app for kids with Shanti, ABCs, numbers, shapes, colors, songs, and games." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <div class="page-bg" aria-hidden="true">
+      <div class="orb orb-pink"></div>
+      <div class="orb orb-lavender"></div>
+      <div class="orb orb-yellow"></div>
+      <div class="cloud cloud-one"></div>
+      <div class="cloud cloud-two"></div>
+      <div class="cloud cloud-three"></div>
+      <div class="sparkles" aria-hidden="true">
+        <span>✨</span>
+        <span>🌟</span>
+        <span>💖</span>
+      </div>
+    </div>
+
     <div class="app-shell">
       <header class="topbar">
-        <button class="nav-pill" id="homeBtn" aria-label="Go home">🏠 Home</button>
-        <div class="title-badge">Shanti's Learning World</div>
-        <div class="sparkle">✨</div>
+        <div class="brand">
+          <span class="brand-mark">🌸</span>
+          <span>Shanti’s Learning World</span>
+        </div>
+        <button class="top-button" id="homeBtn" aria-label="Go home">Home</button>
       </header>
 
-      <main class="content-panel">
-        <section id="homeScreen" class="screen active">
-          <div class="hero-card">
-            <div class="character-scene" aria-label="Shanti illustration">
-              <div class="shanti">
+      <main id="homeScreen" class="screen active">
+        <section class="hero-card">
+          <div class="hero-copy">
+            <span class="welcome-pill">Welcome to</span>
+            <h1>Shanti’s Learning World!</h1>
+            <p>Let’s Learn, Play &amp; Explore! 🌸</p>
+            <div class="hero-actions">
+              <button class="primary-btn" id="startLearningBtn">Start Learning</button>
+            </div>
+          </div>
+
+          <div class="hero-art" aria-label="Shanti reading a book next to floating letters and numbers">
+            <div class="float float-a">A</div>
+            <div class="float float-b">B</div>
+            <div class="float float-c">123</div>
+            <div class="float float-d">🌟</div>
+            <div class="float float-e">☀️</div>
+
+            <div class="shanti-scene">
+              <div class="book">
+                <span class="book-page"></span>
+                <span class="book-page two"></span>
+              </div>
+              <div class="shanti-character">
                 <div class="hair"></div>
                 <div class="face">
-                  <div class="eye left"></div>
-                  <div class="eye right"></div>
-                  <div class="smile"></div>
+                  <span class="eye left"></span>
+                  <span class="eye right"></span>
+                  <span class="smile"></span>
                 </div>
                 <div class="dress">
-                  <div class="strap left"></div>
-                  <div class="strap right"></div>
+                  <span class="strap left"></span>
+                  <span class="strap right"></span>
                 </div>
+                <div class="arm left"></div>
+                <div class="arm right"></div>
               </div>
             </div>
-
-            <div class="hero-copy">
-              <p class="eyebrow">Hi, I’m Shanti!</p>
-              <h1>Let’s learn and play!</h1>
-              <p class="message-bubble">Great Job! Ready for a fun adventure?</p>
-            </div>
           </div>
-
-          <div class="quick-grid" id="categoryGrid" aria-label="Learning categories"></div>
         </section>
 
-        <section id="activityScreen" class="screen">
-          <div class="section-head">
-            <button class="back-btn" id="backBtn" aria-label="Back to home">← Back</button>
-            <h2 id="activityTitle">Learning Activity</h2>
+        <section class="activity-section">
+          <div class="section-header">
+            <h2>Pick an Adventure</h2>
+            <span class="mini-badge">Learning fun!</span>
           </div>
-          <div id="activityContent" class="activity-content"></div>
+          <div id="categoryGrid" class="activity-grid" aria-label="Learning activities"></div>
         </section>
+      </main>
+
+      <main id="activityScreen" class="screen">
+        <div class="section-head">
+          <button class="back-btn" id="backBtn" aria-label="Back to home">← Back</button>
+          <h2 id="activityTitle">Learning Activity</h2>
+        </div>
+        <div id="activityContent" class="activity-content"></div>
       </main>
     </div>
 
