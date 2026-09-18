@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shanti's Learning World</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="nav-pill" id="homeBtn" aria-label="Go home">🏠 Home</button>
+        <div class="title-badge">Shanti's Learning World</div>
+        <div class="sparkle">✨</div>
+      </header>
+
+      <main class="content-panel">
+        <section id="homeScreen" class="screen active">
+          <div class="hero-card">
+            <div class="character-scene" aria-label="Shanti illustration">
+              <div class="shanti">
+                <div class="hair"></div>
+                <div class="face">
+                  <div class="eye left"></div>
+                  <div class="eye right"></div>
+                  <div class="smile"></div>
+                </div>
+                <div class="dress">
+                  <div class="strap left"></div>
+                  <div class="strap right"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-copy">
+              <p class="eyebrow">Hi, I’m Shanti!</p>
+              <h1>Let’s learn and play!</h1>
+              <p class="message-bubble">Great Job! Ready for a fun adventure?</p>
+            </div>
+          </div>
+
+          <div class="quick-grid" id="categoryGrid" aria-label="Learning categories"></div>
+        </section>
+
+        <section id="activityScreen" class="screen">
+          <div class="section-head">
+            <button class="back-btn" id="backBtn" aria-label="Back to home">← Back</button>
+            <h2 id="activityTitle">Learning Activity</h2>
+          </div>
+          <div id="activityContent" class="activity-content"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
